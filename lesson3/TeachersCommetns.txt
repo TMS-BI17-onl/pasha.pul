@@ -1,0 +1,13 @@
+Well done!
+
+3
+b) -1
+The solution is to use UNION.
+Correct solution:
+SELECT Name
+FROM Purchasing.Vendor
+UNION
+SELECT Name
+FROM Sales.Store
+
+Mark: 9
