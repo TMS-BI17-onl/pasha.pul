@@ -1,0 +1,116 @@
+CREATE DATABASE TouristEquipmentRental
+
+CREATE TABLE fctOrders
+(
+    ID_order      		  INT IDENTITY (1,1),
+    Inventory_number              INT NOT NULL,
+    Employee_number               INT,
+    Booking_date	          DATE NOT NULL, 
+    Rent_date		          DATE,
+    Plan_return_date              DATE,
+    Fact_return_date              DATE,
+    ID_customer                   INT,
+    ID_discount                   INT,
+    CONSTRAINT PK_fctOrders_ID_order PRIMARY KEY (ID_order)
+);
+/*INSERT INTO fctOrders (Inventory_number, Employee_number, Booking_date, Rent_date, Plan_return_date, Fact_return_date, ID_customer, ID_discount)
+VALUES (1, 35, '1999-10-01', '1998-10-01', '1997-09-01', '1996-05-01', 2, 8)
+       (2, 34, '1993-07-02', '1995-09-02', '1991-08-10', '1996-03-05', 5, 10)*/    ПРИМЕР НАПОЛНЕНИЯ ТАБЛИЦЫ!!!
+
+CREATE TABLE dimEquipments
+(
+    Inventory_number              INT IDENTITY (1,1),
+    Category                      VARCHAR(50),
+    Equipment_name                NVARCHAR(100) NOT NULL,
+    Rental_price	          money, 
+    Security_decosit              money,
+    Vendor_price                  money NOT NULL,
+    Vendor_name                   NVARCHAR(100) NOT NULL 
+    CONSTRAINT PK_dimEquipments_Inventory_number PRIMARY KEY (Inventory_number)
+);
+/*INSERT INTO dimEquipments (Inventory_number, Category, Equipment_name, Rental_price, Security_decosit, Vendor_price, Vendor_name)*/
+
+	
+CREATE TABLE fctMaintenances
+(
+    Maintenance                   INT IDENTITY (1,1),
+    Start_date                    DATE NOT NULL, 
+    End_date                      DATE,
+    Maintenance_cost              money, 
+    Inventory_number              INT,
+    Employee_number               INT
+    CONSTRAINT PK_fctMaintenances_Maintenance PRIMARY KEY (Maintenance)
+);
+/*INSERT INTO fctMaintenances (Maintenance, Start_date, End_date, Maintenance_cost, Inventory_number, Employee_number)*/
+
+
+CREATE TABLE dimEmployees
+(
+    Employee_number               INT IDENTITY (1,1),
+    Position                      NVARCHAR(50) NOT NULL, 
+    Full_name                     NVARCHAR(100),
+    Fix_salary                    money NOT NULL, 
+    Employement_date              DATE NOT NULL,
+    Dismissal_date                DATE
+    CONSTRAINT PK_dimEmployees_Employee_number PRIMARY KEY (Employee_number)
+);
+/*INSERT INTO dimEmployees (Employee_number , Position, Full_name, Fix_salary, Employement_date, Dismissal_date)*/
+
+
+CREATE TABLE dimCustomers
+(
+    ID_customer                   INT IDENTITY (1,1),
+    Category                      VARCHAR(50), 
+    Customer_name                 NVARCHAR(50) NOT NULL,
+    Registration_number           CHAR(9) UNIQUE,  
+    Passport_number               CHAR(14) UNIQUE,
+    Phone_number                  VARCHAR(20),
+    Email                         VARCHAR(50)
+    CONSTRAINT PK_dimCustomers_ID_customer PRIMARY KEY (ID_customer)
+);
+/*INSERT INTO dimCustomers (ID_customer , Category, Customer_name, Registration_number, Passport_number , Phone_number, Email)*/
+
+
+CREATE TABLE dimDiscounts
+(
+    ID_discount                   INT IDENTITY (1,1),
+    Type_discount                 VARCHAR(50), 
+    Discount_percentage           DEC(3,2),
+    Start_date_discount           DATE NOT NULL,  
+    End_date_discount             DATE
+    CONSTRAINT PK_dimDiscounts_ID_discount PRIMARY KEY (ID_discount)
+);
+/*INSERT INTO dimDiscounts (ID_discount , Type_discount, Discount_percentage, Start_date_discount, End_date_discount)*/
+
+
+ALTER TABLE fctOrders ADD CONSTRAINT FK_fctOrders_Inventory_number FOREIGN KEY (Inventory_number) REFERENCES dimEquipments (Inventory_number)
+
+ALTER TABLE fctOrders ADD CONSTRAINT FK_fctOrders_Employee_number FOREIGN KEY (Employee_number) REFERENCES dimEmployees (Employee_number)
+
+ALTER TABLE fctOrders ADD CONSTRAINT FK_fctOrders_ID_customer FOREIGN KEY (ID_customer) REFERENCES dimCustomers (ID_customer)
+
+ALTER TABLE fctOrders ADD CONSTRAINT FK_fctOrders_ID_discount FOREIGN KEY (ID_discount) REFERENCES dimDiscounts (ID_discount)
+
+ALTER TABLE fctMaintenances ADD CONSTRAINT FK_fctMaintenances_Employee_number FOREIGN KEY (Employee_number) REFERENCES dimEmployees (Employee_number)
+
+ALTER TABLE fctMaintenances ADD CONSTRAINT FK_fctMaintenances_Inventory_number FOREIGN KEY (Inventory_number) REFERENCES dimEquipments (Inventory_number)
+
+
+
+SELECT *
+FROM [dbo].[fctOrders]
+
+SELECT *
+FROM [dbo].[dimEquipments]
+
+SELECT *
+FROM [dbo].[dimCustomers]
+
+SELECT *
+FROM [dbo].[dimDiscounts]
+
+SELECT *
+FROM [dbo].[fctMaintenances]
+
+SELECT *
+FROM [dbo].[dimEmployees]
