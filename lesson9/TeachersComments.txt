@@ -1,0 +1,6 @@
+Well done!
+
+-1
+Your solution is showing data for all FATHERS with name Dmitry. ON condition in Join should be done vice versa.
+
+Mark: 9
