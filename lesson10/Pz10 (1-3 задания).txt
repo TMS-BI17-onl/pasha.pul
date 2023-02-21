@@ -1,0 +1,17 @@
+select FirstName, LastName, PhoneNumber
+from [Person].[Person] p LEFT JOIN [Person].[PersonPhone] f ON p.[BusinessEntityID]=f.BusinessEntityID
+where PhoneNumber like '4%5'
+
+
+select SickLeaveHours, BusinessEntityID,
+CASE WHEN SickLeaveHours between 17 and 20 THEN 'Adolescence'
+     WHEN SickLeaveHours between 21 and 59 THEN 'Adults'
+     WHEN SickLeaveHours between 60 and 75 THEN 'Elderly'
+     WHEN SickLeaveHours between 76 and 90 THEN 'Senile'
+END
+from [HumanResources].[Employee]
+
+
+select MAX(StandardCost) as max_cost, Color
+from [Production].[Product]
+group by Color
