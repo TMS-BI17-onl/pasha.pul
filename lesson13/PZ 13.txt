@@ -1,0 +1,18 @@
+1) insert into manufacturer (Name)
+Values (CountryID, 'HP')
+where CountryID=4
+
+2) Select userAge
+from user
+where userAge 'Андрей'/3
+
+3) select Name, Price
+from Product (Select MAX(Price) from Product)
+
+4) select userName, PhoneName
+from user u left join phone p on u.id=p.id
+where p.Name beetwen 3 and 4 or u.Age>35
+
+5) Select top 5 userName, Max(productCount)
+from user u join product p on u.Name=p.Count
+Group by userName
