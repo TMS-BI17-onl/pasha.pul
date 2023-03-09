@@ -16,3 +16,5 @@ where p.Name beetwen 3 and 4 or u.Age>35
 5) Select top 5 userName, Max(productCount)
 from user u join product p on u.Name=p.Count
 Group by userName
+
+Mark: 5
