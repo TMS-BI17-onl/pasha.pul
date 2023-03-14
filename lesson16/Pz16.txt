@@ -1,0 +1,54 @@
+1 задание
+
+select ProductSubcategoryID, 
+from [Production].[Product]
+where ProductSubcategoryID=(select MIN(ProductSubcategoryID)from [Production].[Product])
+Having ProductSubcategoryID>150
+
+2 задание 
+
+1) select top1 with ties Name, StandardCost
+from Production.Product
+order by StandardCost Desc
+2) Select* from(
+select Name, StandardCost, Rank() OVER (ORDER BY StandardCost DESC) AS rnk
+from Production.Product) t
+where rnk=1
+3) select Name
+from Production.Product
+where StandardCost=(select max(StandardCost))
+from Production.Product
+4)select Name (select Name,StandardCost, max(StandardCost) over () as max_cost
+from Production.Product) t
+where StandardCost=max_cost
+
+3 задание
+
+select n.FullName
+from [dbo].[DimEmployees] n left join [dbo].[FctMaintenance] m ON
+n.EmployeeNumber=m.EmployeeNumber
+where m.EmployeeNumber is null
+
+
+4 задание
+
+select e.FullName, Count(m.FctMaintenance) as cnt
+from FctMaintenance m join DimEmployees e ON
+m.EmployeeNumber=e.EmployeeNumber
+where DATEDIFF (YEAR, GATEDATE(), m.StartDate)<=5
+GROUP BY FullName
+
+5 задание
+
+select Category, is_read boolean as boll
+from Notifications n left join Users u ON
+n.id bigint=u.id bigint
+where alex@gmail.com
+
+
+
+ДАЛЬШЕ не успел
+
+
+
+
